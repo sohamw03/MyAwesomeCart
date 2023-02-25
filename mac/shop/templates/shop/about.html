@@ -1,0 +1,76 @@
+{% extends 'shop/basic.html' %}
+
+{% block title %}About Us - My Awesome Cart{% endblock %}
+
+{% block css %}
+<style>
+    .jumbotron {
+        margin-bottom: 2rem;
+        background-color: #e9ecef;
+        border-radius: 0.3rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<main role="main">
+    <div class="jumbotron">
+        <div class="container py-5">
+            <h1 class="display-3">My Awesome Cart!</h1>
+            <p>My Awesome Cart is an online shopping website that has been catering to customers for over a decade.
+                Established in 2011, the company has grown to become a household name in the e-commerce industry. Its
+                aim is to make shopping easy, convenient, and fun for customers around the world.
+                The company was founded by a group of enthusiastic entrepreneurs who saw a gap in the market for an
+                online shopping platform that would offer high-quality products at affordable prices. With their
+                extensive experience in the retail industry, they set out to create a shopping platform that would be
+                accessible to everyone, regardless of their location or budget.
+                From the very beginning, the company's mission has been to provide customers with an unforgettable
+                shopping experience. To achieve this, they have invested in cutting-edge technology and robust logistics
+                infrastructure that allows them to offer speedy deliveries, easy returns, and round-the-clock customer
+                support.
+                My Awesome Cart has a wide range of products that cater to different needs and preferences. Whether
+                you're looking for the latest fashion trends, household appliances, or electronic gadgets, you're sure
+                to find them all on the platform. The company works with reputable brands and suppliers to ensure that
+                all products sold on the website are of the highest quality and meet the highest standards.</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Example row of columns -->
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Heading</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                    mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
+                    mollis euismod. Donec sed odio dui. </p>
+                <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Heading</h2>
+                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
+                    mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna
+                    mollis euismod. Donec sed odio dui. </p>
+                <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Heading</h2>
+                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula
+                    porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+                    ut fermentum massa justo sit amet risus.</p>
+                <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
+            </div>
+        </div>
+        <hr>
+    </div> <!-- /container -->
+</main>
+
+<footer class="container">
+    <p>&copy; Company 2017-2023</p>
+</footer>
+{% endblock %}
+{% block js %}
+<script>
+    document.getElementById('about').className = "nav-link active";
+</script>
+{% endblock %}
