@@ -2,33 +2,12 @@
 
 {% block title %}Checkout - My Awesome Cart{% endblock %}
 {% block body %}
-<div class="container">
+<div class="container mb-5">
     <div class="col mt-5">
         <h2>Step 1 - My Awesome Cart Express Checkout - Review Your Cart Items</h2>
-        <div id="items" style="margin-top: 1.5rem;">
-            <ol class="list-group list-group-numbered">
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">Subheading</div>
-                        Content for list item
-                    </div>
-                    <span class="badge bg-primary rounded-pill">14</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">Subheading</div>
-                        Content for list item
-                    </div>
-                    <span class="badge bg-primary rounded-pill">14</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold">Subheading</div>
-                        Content for list item
-                    </div>
-                    <span class="badge bg-primary rounded-pill">14</span>
-                </li>
-            </ol>
+        <div style="margin-top: 1.5rem;">
+            <ul class="list-group list-group-numbered" id="items">
+            </ul>
         </div>
     </div>
     <div class="col mt-5">
@@ -72,4 +51,62 @@
         </form>
     </div>
 </div>
+{% endblock %}
+{% block js %}
+<script>
+    if (localStorage.getItem('cart') == null) {
+        var cart = {};
+    }
+    else {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        var sum = 0;
+        for (var item in cart) {
+            sum += cart[item][0];
+        }
+        document.getElementById('cart').innerHTML = sum;
+    }
+    console.log(cart);
+    if ($.isEmptyObject(cart)) {
+        mystr = `<p>Your cart is empty! please add some items before checking out.</p>`;
+        $('#items').append(mystr);
+    }
+    else {
+        for (item in cart) {
+            let name = cart[item][1];
+            let qty = cart[item][0];
+            mystr = `<li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">${name}</div>
+                    </div>
+                    <span class="badge text-bg-dark">${qty}</span>
+                </li>`;
+            $('#items').append(mystr);
+        }
+
+        function updateCart(cart) {
+            var sum = 0;
+            for (var item in cart) {
+                sum += cart[item][0];
+            };
+            document.getElementById('cart').innerHTML = sum;
+            updatePopover(cart);
+        }updateCart(cart);
+
+        // Updating the cart popover
+        function updatePopover(cart) {
+            var popStr = "";
+            var i = 1;
+            for (var item in cart) {
+                popStr = popStr + "<b>" + i + "</b>. ";
+                popStr = popStr + cart[item][1] + " Qty : " + cart[item][0] + "<br>";
+                i = i + 1;
+            }
+            popStr = popStr + "<div><a href='/shop/checkout' class='btn btn-primary' id='checkout' style='margin-right:4px;'>Checkout</a><a onclick='clearCart()' class='btn btn-primary' id='clearCart'>Clear Cart</a></div>";
+            document.getElementById("popcart").setAttribute("data-bs-content", popStr);
+            $('#popcart').popover('dispose');
+            popcart = new bootstrap.Popover($('#popcart'));
+            $('#popcart').popover('show');
+        }
+    }
+</script>
 {% endblock %}
