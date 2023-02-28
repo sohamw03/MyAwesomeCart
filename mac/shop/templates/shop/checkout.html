@@ -12,38 +12,43 @@
     </div>
     <div class="col mt-5">
         <h2>Step 2 - Enter Address & Other Details</h2>
-        <form class="row g-3 mt-2">
+        <form class="row g-3 mt-2" method="post" action="/shop/checkout/">
+            {% csrf_token %}
+            <input type="hidden" name="itemsJson" id="itemsJson" value="">
             <div class="col-md-4">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name">
+                <input type="text" class="form-control" id="name" name="name">
             </div>
             <div class="col-md-4">
                 <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="example123@xyz.com">
+                <input type="email" class="form-control" id="inputEmail4" placeholder="example123@xyz.com" name="email"
+                    required>
             </div>
             <div class="col-md-4">
                 <label for="inputPhone" class="form-label">Phone</label>
-                <input type="tel" class="form-control" id="inputPhone" placeholder="+91">
+                <input type="tel" class="form-control" id="inputPhone" placeholder="+91" name="phone" required>
             </div>
             <div class="col-12">
                 <label for="inputAddress" class="form-label">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="address"
+                    required>
             </div>
             <div class="col-12">
                 <label for="inputAddress2" class="form-label">Address line 2</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor"
+                    name="address2">
             </div>
             <div class="col-md-6">
                 <label for="inputCity" class="form-label">City</label>
-                <input type="text" class="form-control" id="inputCity">
+                <input type="text" class="form-control" id="inputCity" name="city" required>
             </div>
             <div class="col-md-4">
                 <label for="inputState" class="form-label">State</label>
-                <input type="text" class="form-control" id="inputState">
+                <input type="text" class="form-control" id="inputState" name="state" required>
             </div>
             <div class="col-md-2">
                 <label for="inputZip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="inputZip">
+                <input type="text" class="form-control" id="inputZip" name="zip_code" required>
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Place Order</button>
@@ -66,6 +71,13 @@
         document.getElementById('cart').innerHTML = sum;
     }
     console.log(cart);
+    $("#itemsJson").val(JSON.stringify(cart));
+    //{% if thank == 1 %}
+    alert('Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker.');
+    localStorage.clear();
+    document.location = "/shop";
+    //{% endif %}
+
     if ($.isEmptyObject(cart)) {
         mystr = `<p>Your cart is empty! please add some items before checking out.</p>`;
         $('#items').append(mystr);
@@ -90,7 +102,7 @@
             };
             document.getElementById('cart').innerHTML = sum;
             updatePopover(cart);
-        }updateCart(cart);
+        } updateCart(cart);
 
         // Updating the cart popover
         function updatePopover(cart) {
@@ -103,6 +115,18 @@
             }
             popStr = popStr + "<div><a href='/shop/checkout' class='btn btn-primary' id='checkout' style='margin-right:4px;'>Checkout</a><a onclick='clearCart()' class='btn btn-primary' id='clearCart'>Clear Cart</a></div>";
             document.getElementById("popcart").setAttribute("data-bs-content", popStr);
+            $('#popcart').popover('dispose');
+            popcart = new bootstrap.Popover($('#popcart'));
+            $('#popcart').popover('show');
+        }
+
+        // Clear cart
+        function clearCart() {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            localStorage.clear();
+            cart = {};
+            updateCart(cart);
+            document.getElementById("popcart").setAttribute("data-bs-content", "Your cart is empty!");
             $('#popcart').popover('dispose');
             popcart = new bootstrap.Popover($('#popcart'));
             $('#popcart').popover('show');

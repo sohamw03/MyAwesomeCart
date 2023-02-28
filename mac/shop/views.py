@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Product, Contact
+from .models import Product, Contact, Order
 from math import ceil
 
 # Create your views here.
@@ -22,11 +22,11 @@ def about(request):
 
 
 def contact(request):
-    if request.method=="POST":
-        name = request.POST.get('name', '')
-        email = request.POST.get('email', '')
-        phone = request.POST.get('phone', '')
-        desc = request.POST.get('desc', '')
+    if request.method == "POST":
+        name = request.POST.get("name", "")
+        email = request.POST.get("email", "")
+        phone = request.POST.get("phone", "")
+        desc = request.POST.get("desc", "")
         contact = Contact(name=name, email=email, phone=phone, desc=desc)
         contact.save()
     return render(request, "shop/contact.html")
@@ -44,8 +44,29 @@ def productview(request, myid):
     # Fetch the product using the id.
     prod = Product.objects.filter(id=myid)
     print(prod)
-    return render(request, "shop/prodview.html", {'product':prod[0]})
+    return render(request, "shop/prodview.html", {"product": prod[0]})
 
 
 def checkout(request):
+    if request.method == "POST":
+        itemsJson = request.POST.get("itemsJson", "")
+        name = request.POST.get("name", "")
+        email = request.POST.get("email", "")
+        phone = request.POST.get("phone", "")
+        address = request.POST.get("address", "") + request.POST.get("address2", "")
+        city = request.POST.get("city", "")
+        state = request.POST.get("state", "")
+        zip_code = request.POST.get("zip_code", "")
+        order = Order(
+            items_json=itemsJson, 
+            name=name,
+            email=email,
+            phone=phone,
+            address=address,
+            city=city,
+            state=state,
+            zip_code=zip_code,
+        )
+        order.save()
+        return render(request, "shop/checkout.html", {"thank": 1, "id": order.order_id})
     return render(request, "shop/checkout.html")
