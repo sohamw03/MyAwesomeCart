@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Product, Contact, Order
+from .models import Product, Contact, Order, OrderUpdate
 from math import ceil
+import json
+import datetime
 
 # Create your views here.
 def index(request):
@@ -33,6 +35,30 @@ def contact(request):
 
 
 def tracker(request):
+    if request.method == "POST":
+        order_id = request.POST.get("order_id", "")
+        email = request.POST.get("email", "")
+        try:
+            order = Order.objects.filter(order_id=order_id, email=email)
+            if len(order) > 0:
+                update = OrderUpdate.objects.filter(order_id=order_id)
+                updates = []
+                for item in update:
+                    print(type(item.timestamp))
+                    updates.append(
+                        {
+                            "text": item.update_desc,
+                            "time": item.timestamp.strftime("%d-%m-%Y"),
+                        }
+                    )
+                    response = json.dumps(updates, default=str)
+                print(response)
+                return HttpResponse(response)
+            else:
+                return HttpResponse("{}")
+        except Exception as e:
+            print(str(e))
+            return HttpResponse("{}")
     return render(request, "shop/tracker.html")
 
 
@@ -58,7 +84,7 @@ def checkout(request):
         state = request.POST.get("state", "")
         zip_code = request.POST.get("zip_code", "")
         order = Order(
-            items_json=itemsJson, 
+            items_json=itemsJson,
             name=name,
             email=email,
             phone=phone,
@@ -68,5 +94,9 @@ def checkout(request):
             zip_code=zip_code,
         )
         order.save()
+        update = OrderUpdate(
+            order_id=order.order_id, update_desc="The order has been placed."
+        )
+        update.save()
         return render(request, "shop/checkout.html", {"thank": 1, "id": order.order_id})
     return render(request, "shop/checkout.html")
