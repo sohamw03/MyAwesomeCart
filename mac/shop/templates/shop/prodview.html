@@ -91,7 +91,7 @@
     // Clear cart
     function clearCart() {
         cart = JSON.parse(localStorage.getItem('cart'));
-        document.getElementById('div' + item).innerHTML = `<button id="pr{{product.id}}" class="btn btn-secondary cart">Add to Cart</button>`;
+        document.getElementById('divpr{{product.id}}').innerHTML = `<button id="pr{{product.id}}" class="btn btn-secondary cart">Add to Cart</button>`;
         localStorage.clear();
         cart = {};
         updateCart(cart);
@@ -135,7 +135,7 @@
             if (document.getElementById("div" + item)) {
                 document.getElementById("div" + item).innerHTML = "<button id='minus" + item + "' class='btn btn-secondary minus'>-</button> <span id='val" + item + "'>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-secondary plus'>+</button>";
             }
-            if (cart[item][0]==0){
+            if (cart[item][0] == 0) {
                 delete cart[item];
             }
         };
@@ -162,6 +162,21 @@
         cart['pr' + a][0] = cart['pr' + a][0] + 1;
         if (document.getElementById('valpr' + a)) {
             document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+        }
+        updateCart(cart);
+    });
+
+    // If buy now is clicked clear the cart and add 1 item of this product
+    $('.bn').on("click", function () {
+        clearCart();
+        var idstr = `pr{{product.id}}`;
+        if (cart[idstr] != undefined) {
+            qty = cart[idstr][0] + 1;
+        }
+        else {
+            qty = 1;
+            name = document.getElementById('name' + idstr).innerHTML;
+            cart[idstr] = [qty, name];
         }
         updateCart(cart);
     });
