@@ -61,7 +61,7 @@
         </div>
         <div class="col-md-8">
             <h2 id="namepr{{product.id}}">{{product.product_name}}</h2>
-            <p class="badge text-bg-success">₹ {{product.price}}</p>
+            <p class="badge text-bg-success" id="pricepr{{product.id}}">₹ {{product.price}}</p>
             <p>{{product.desc}}</p>
         </div>
     </div>
@@ -123,7 +123,8 @@
         else {
             qty = 1;
             name = document.getElementById('name' + idstr).innerHTML;
-            cart[idstr] = [qty, name];
+            price = document.getElementById('price' + idstr).innerHTML.slice(2,);
+            cart[idstr] = [qty, name, price];
         }
         updateCart(cart);
     });
@@ -170,14 +171,10 @@
     $('.bn').on("click", function () {
         clearCart();
         var idstr = `pr{{product.id}}`;
-        if (cart[idstr] != undefined) {
-            qty = cart[idstr][0] + 1;
-        }
-        else {
-            qty = 1;
-            name = document.getElementById('name' + idstr).innerHTML;
-            cart[idstr] = [qty, name];
-        }
+        qty = 1;
+        name = document.getElementById('name' + idstr).innerHTML;
+        price = document.getElementById('price' + idstr).innerHTML.slice(2,);
+        cart[idstr] = [qty, name, price];
         updateCart(cart);
     });
 </script>

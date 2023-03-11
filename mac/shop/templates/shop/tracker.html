@@ -24,7 +24,14 @@
     <div class="col mt-5">
         <h2>Order status</h2>
         <div style="margin-top: 1.5rem;">
-            <ul class="list-group" id="items">
+            <ul class="list-group" id="status">
+            </ul>
+        </div>
+    </div>
+    <div class="col mt-5">
+        <h2>Order details</h2>
+        <div style="margin-top: 1.5rem;">
+            <ul class="list-group" id="details">
             </ul>
         </div>
     </div>
@@ -34,7 +41,7 @@
 <script>
     document.getElementById('tracker').className = "nav-link active";
     $('#trackerForm').submit(function (event) {
-        $('#items').empty();
+        $('#status').empty();
         var formData = {
             'order_id': $('input[name=order_id]').val(),
             'email': $('input[name=email]').val(),
@@ -48,7 +55,8 @@
         })
             .done(function (data) {
                 console.log(data);
-                let updates = JSON.parse(data);
+                data = JSON.parse(data);
+                let updates = data[0];
                 if (updates.length > 0 & updates != {}) {
 
                     for (i = 0; i < updates.length; i++) {
@@ -56,11 +64,11 @@
                         let time = updates[i]['time'];
                         mystr = `<li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
-                                <div class="fw-bold">${text}${(i==0)?"🟢":""}</div>
+                                <div class="fw-bold">${text}${(i == 0) ? "🟢" : ""}</div>
                                 </div>
                                 <span class="badge text-bg-dark">${time}</span>
                                 </li>`;
-                        $('#items').append(mystr);
+                        $('#status').append(mystr);
                     }
                 }
                 else {
@@ -69,8 +77,23 @@
                                 <div class="fw-bold">Sorry we could not find the order 😔</div>
                                 </div>
                                 </li>`;
-                    $('#items').append(mystr);
+                    $('#status').append(mystr);
                 }
+                // Fill in the order details
+                cart = JSON.parse(data[1]);
+                res = "";
+                for (item in cart) {
+                    let name = cart[item][1];
+                    let qty = parseInt(cart[item][0]);
+                    mystr = `<li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">${name}</div>
+                    </div>
+                    <span class="badge text-bg-dark ms-1">x${qty}</span>
+                </li>`;
+                    res += mystr; 
+            }
+            $('#details').html(res);
             });
         event.preventDefault();
     });

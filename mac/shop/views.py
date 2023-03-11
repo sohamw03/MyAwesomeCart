@@ -51,7 +51,7 @@ def tracker(request):
                             "time": item.timestamp.strftime("%d-%m-%Y"),
                         }
                     )
-                    response = json.dumps(updates, default=str)
+                    response = json.dumps([updates, order[0].items_json], default=str)
                 print(response)
                 return HttpResponse(response)
             else:

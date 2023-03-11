@@ -8,7 +8,8 @@
         background-color: #d4f4dd !important;
         font-weight: 600 !important;
     }
-    #cartlist{
+
+    #cartlist {
         background-color: #d4f4dd;
     }
 </style>
@@ -106,7 +107,7 @@
                     <span class="badge text-bg-success" id="price${item}">₹ ${price}</span><span class="badge text-bg-dark ms-1">x${qty}</span>
                 </li>`;
             $('#items').append(mystr);
-            sum += price*qty;
+            sum += price * qty;
         }
         $('#items').append(`<li class="list-group-item d-flex justify-content-between align-items-start" id="cartlist">
                     <div class="ms-2 me-auto">
@@ -125,33 +126,32 @@
             updatePopover(cart);
         } updateCart(cart);
 
-        // Updating the cart popover
-        function updatePopover(cart) {
-            var popStr = "";
-            var i = 1;
-            for (var item in cart) {
-                popStr = popStr + "<b>" + i + "</b>. ";
-                popStr = popStr + cart[item][1] + " Qty : " + cart[item][0] + "<br>";
-                i = i + 1;
-            }
-            popStr = popStr + "<div><a href='/shop/checkout' class='btn btn-primary' id='checkout' style='margin-right:4px;'>Checkout</a><a onclick='clearCart()' class='btn btn-primary' id='clearCart'>Clear Cart</a></div>";
-            document.getElementById("popcart").setAttribute("data-bs-content", popStr);
-            $('#popcart').popover('dispose');
-            popcart = new bootstrap.Popover($('#popcart'));
-            $('#popcart').popover('show');
+    }
+    // Clear cart
+    function clearCart() {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        localStorage.clear();
+        cart = {};
+        updateCart(cart);
+        document.getElementById("popcart").setAttribute("data-bs-content", "Your cart is empty!");
+        $('#popcart').popover('dispose');
+        popcart = new bootstrap.Popover($('#popcart'));
+        $('#popcart').popover('show');
+    }
+    // Updating the cart popover
+    function updatePopover(cart) {
+        var popStr = "";
+        var i = 1;
+        for (var item in cart) {
+            popStr = popStr + "<b>" + i + "</b>. ";
+            popStr = popStr + cart[item][1] + " Qty : " + cart[item][0] + "<br>";
+            i = i + 1;
         }
-
-        // Clear cart
-        function clearCart() {
-            cart = JSON.parse(localStorage.getItem('cart'));
-            localStorage.clear();
-            cart = {};
-            updateCart(cart);
-            document.getElementById("popcart").setAttribute("data-bs-content", "Your cart is empty!");
-            $('#popcart').popover('dispose');
-            popcart = new bootstrap.Popover($('#popcart'));
-            $('#popcart').popover('show');
-        }
+        popStr = popStr + "<div><a href='/shop/checkout' class='btn btn-primary' id='checkout' style='margin-right:4px;'>Checkout</a><a onclick='clearCart()' class='btn btn-primary' id='clearCart'>Clear Cart</a></div>";
+        document.getElementById("popcart").setAttribute("data-bs-content", popStr);
+        $('#popcart').popover('dispose');
+        popcart = new bootstrap.Popover($('#popcart'));
+        $('#popcart').popover('show');
     }
 </script>
 {% endblock %}
