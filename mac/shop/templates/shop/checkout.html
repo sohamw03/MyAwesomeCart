@@ -1,12 +1,24 @@
 {% extends 'shop/basic.html' %}
 
 {% block title %}Checkout - My Awesome Cart{% endblock %}
+{% block css %}
+<style>
+    .text-bg-success {
+        color: #0a8754 !important;
+        background-color: #d4f4dd !important;
+        font-weight: 600 !important;
+    }
+    #cartlist{
+        background-color: #d4f4dd;
+    }
+</style>
+{% endblock %}
 {% block body %}
 <div class="container mb-5">
     <div class="col mt-5">
         <h2>Step 1 - My Awesome Cart Express Checkout - Review Your Cart Items</h2>
         <div style="margin-top: 1.5rem;">
-            <ul class="list-group list-group-numbered" id="items">
+            <ul class="list-group" id="items">
             </ul>
         </div>
     </div>
@@ -70,7 +82,6 @@
         }
         document.getElementById('cart').innerHTML = sum;
     }
-    console.log(cart);
     $("#itemsJson").val(JSON.stringify(cart));
     //{% if thank == 1 %}
     alert('Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker.');
@@ -83,17 +94,27 @@
         $('#items').append(mystr);
     }
     else {
+        let sum = 0
         for (item in cart) {
             let name = cart[item][1];
-            let qty = cart[item][0];
+            let qty = parseInt(cart[item][0]);
+            let price = parseInt(cart[item][2]);
             mystr = `<li class="list-group-item d-flex justify-content-between align-items-start">
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">${name}</div>
                     </div>
-                    <span class="badge text-bg-dark">${qty}</span>
+                    <span class="badge text-bg-success" id="price${item}">₹ ${price}</span><span class="badge text-bg-dark ms-1">x${qty}</span>
                 </li>`;
             $('#items').append(mystr);
+            sum += price*qty;
         }
+        $('#items').append(`<li class="list-group-item d-flex justify-content-between align-items-start" id="cartlist">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">Total price</div>
+                    </div>
+                    <span class="badge text-bg-success" style="text-decoration:underline;font-size:16px;">₹ ${sum}</span>
+                </li>`)
+
 
         function updateCart(cart) {
             var sum = 0;
