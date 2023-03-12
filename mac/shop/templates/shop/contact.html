@@ -2,6 +2,7 @@
 
 {% block title %}Contact Us - My Awesome Cart{% endblock %}
 {% block body %}
+<div id="alerts"></div>
 <div class="container mt-5">
     <h1>Contact us for further queries</h1>
     <form action="/shop/contact/" method="post">
@@ -31,5 +32,11 @@
 {% block js %}
 <script>
     document.getElementById('contact').className = "nav-link active";
+
+    //{% if thank == 1 %}
+    $("#alerts").prepend(`<div class="alert alert-success alert-dismissible fade show" role="alert"><span>Thanks for contacting us, we will reach back to you soon!</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`);
+    //{% endif %}
 </script>
 {% endblock %}

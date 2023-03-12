@@ -15,6 +15,7 @@
 </style>
 {% endblock %}
 {% block body %}
+<div id="alerts"></div>
 <div class="container mb-5">
     <div class="col mt-5">
         <h2>Step 1 - My Awesome Cart Express Checkout - Review Your Cart Items</h2>
@@ -85,9 +86,13 @@
     }
     $("#itemsJson").val(JSON.stringify(cart));
     //{% if thank == 1 %}
-    alert('Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order tracker.');
-    localStorage.clear();
-    document.location = "/shop";
+    $("#alerts").append(`<div class="alert alert-success alert-dismissible fade show" role="alert"><span>Thanks for ordering with us. Your order id is {{id}}. Use it to track your order using our order <a href="/shop/tracker">tracker</a>.</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`);
+    $("[data-bs-dismiss='alert']").click(function () {
+        localStorage.clear();
+        document.location = "/shop";
+    });
     //{% endif %}
 
     if ($.isEmptyObject(cart)) {

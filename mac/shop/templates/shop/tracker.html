@@ -54,7 +54,6 @@
             encode: true
         })
             .done(function (data) {
-                console.log(data);
                 data = JSON.parse(data);
                 let updates = data[0];
                 if (updates.length > 0 & updates != {}) {
