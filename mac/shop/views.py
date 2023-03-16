@@ -46,7 +46,6 @@ def tracker(request):
                 update = OrderUpdate.objects.filter(order_id=order_id)
                 updates = []
                 for item in update:
-                    print(type(item.timestamp))
                     updates.append(
                         {
                             "text": item.update_desc,
@@ -54,7 +53,6 @@ def tracker(request):
                         }
                     )
                     response = json.dumps([updates, order[0].items_json], default=str)
-                print(response)
                 return HttpResponse(response)
             else:
                 return HttpResponse("{}")
@@ -71,7 +69,6 @@ def search(request):
 def productview(request, myid):
     # Fetch the product using the id.
     prod = Product.objects.filter(id=myid)
-    print(prod)
     return render(request, "shop/prodview.html", {"product": prod[0]})
 
 

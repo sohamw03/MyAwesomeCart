@@ -11,17 +11,22 @@
     <div class="row g-5 mt-4 mb-4">
         <div class="col-md-8">
             <h3 class="pb-4 mb-4 fst-italic border-bottom">
-                Title
+                {{blogpost.0.title}}
             </h3>
-
             <article class="blog-post">
-                <h2 class="blog-post-title mb-1">Heading 0</h2>
-                <p class="blog-post-meta">January 1, 2021 by <a href="#">Mark</a></p>
-                <p>Heading 0 content</p>
-                <h2>Heading 1</h2>
-                <p>Heading 1 content</p>
-                <h2>Heading 2</h2>
-                <p>Heading 2 content</p>
+                <h2 class="blog-post-title mb-1">{{blogpost.0.head0}}</h2>
+                <p class="blog-post-meta">{{blogpost.0.pub_date}}</p>
+                <p>{{blogpost.0.chead0}}</p>
+                <h2>{{blogpost.0.head1}}</h2>
+                <p>{{blogpost.0.chead1}}</p>
+                <h2>{{blogpost.0.head2}}</h2>
+                <p>{{blogpost.0.chead2}}</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-between" id="prevnext">
+                    <a><button id="next" type="button" class="btn btn-outline-secondary btn-sm"
+                            disabled>Prev</button></a>
+                    <a><button id="next" type="button" class="btn btn-outline-secondary btn-sm"
+                            disabled>Next</button></a>
+                </div>
         </div>
 
         <div class="col-md-4">
@@ -47,4 +52,23 @@
 {% endblock %}
 
 {% block js %}
+<script>
+    $(function () {
+        var current_id = parseInt("{{blogpost.0.post_id}}");
+        var min_id = parseInt("{{min_id}}");
+        var max_id = parseInt("{{max_id}}");
+        if (current_id == min_id) {
+            $("#prevnext").html(`<a><button id="next" type="button" class="btn btn-outline-secondary btn-sm" disabled>Prev</button></a>
+        <a href="${current_id + 1}"><button id="next" type="button" class="btn btn-outline-secondary btn-sm">Next</button></a>`);
+        }
+        if (min_id < current_id & current_id < max_id) {
+            $("#prevnext").html(`<a href="${current_id - 1}"><button id="prev" type="button" class="btn btn-outline-secondary btn-sm">Prev</button></a>
+        <a href="${current_id + 1}"><button id="next" type="button" class="btn btn-outline-secondary btn-sm">Next</button></a>`);
+        }
+        if (current_id == max_id) {
+            $("#prevnext").html(`<a href="${current_id - 1}"><button id="next" type="button" class="btn btn-outline-secondary btn-sm">Prev</button></a>
+        <a><button id="next" type="button" class="btn btn-outline-secondary btn-sm" disabled>Next</button></a>`);
+        }
+    });
+</script>
 {% endblock %}
