@@ -28,7 +28,8 @@
         <h2>Step 2 - Enter Address & Other Details</h2>
         <form class="row g-3 mt-2" method="post" action="/shop/checkout/">
             {% csrf_token %}
-            <input type="hidden" name="itemsJson" id="itemsJson" value="">
+            <input type="hidden" name="itemsJson" id="itemsJson">
+            <input type="hidden" name="amount" id="amount">
             <div class="col-md-4">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name" required>
@@ -120,6 +121,7 @@
                     </div>
                     <span class="badge text-bg-success" style="text-decoration:underline;font-size:16px;">₹ ${sum}</span>
                 </li>`)
+        $("#amount").attr("value", sum);
 
 
         function updateCart(cart) {
