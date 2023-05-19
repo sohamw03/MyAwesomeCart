@@ -43,12 +43,12 @@ This project is a simple blog app built with Django, a high-level Python web fra
 
 ## Technologies Used
 
-- Django 3.2.3
-- Python 3.9.5
+- Django 4.1.2
+- Python 3.9.11
 - SQLite3
 - HTML5
 - CSS3
-- Bootstrap 5.0.0
+- Bootstrap 5.2.3
 
 ## Installation
 
