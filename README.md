@@ -2,14 +2,13 @@
 
 ## Project Description
 
-This project is a simple blog app built with Django, a high-level Python web framework. The blog allows users to create an account, write and publish posts, and comment on posts written by others. It also features an admin dashboard where administrators can manage posts, comments, and user accounts.
+This project is a simple e-commerce application built with Django, a high-level Python web framework. The platform allows users to buy variety and different category of products, write and publish posts, and comment on posts written by others. It also features an admin dashboard where users can publish their products.
 
 ## Features
 
-- User authentication and authorization
+- Buy products by adding to cart
 - Create, edit, and delete posts
 - Comment on posts
-- Admin dashboard for managing posts, comments, and users
 - Responsive design
 
 ## Screenshots
@@ -76,17 +75,6 @@ To run this project on your local machine, follow these steps:
    ```
 
 6. Open your web browser and go to http://127.0.0.1:8000/.
-
-## Usage
-
-To use the blog app, follow these steps:
-
-1. Create a new account by clicking the "Register" link in the top navigation menu.
-2. Log in to your account by clicking the "Log in" link in the top navigation menu.
-3. Create a new post by clicking the "New post" button on the home page.
-4. View all posts by clicking the "All posts" link in the top navigation menu.
-5. Comment on a post by clicking the "Comment" button below the post.
-6. Log out of your account by clicking the "Log out" link in the top navigation menu.
 
 ## Credits
 
