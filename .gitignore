@@ -1,0 +1,4 @@
+**/.env
+**/__pycache__/**
+mac/my_data.json
+.venv/
