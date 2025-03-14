@@ -1,7 +1,7 @@
 {
     "builds": [
       {
-        "src": "iCoder/wsgi.py",
+        "src": "mac/mac/wsgi.py",
         "use": "@vercel/python"
       }
     ],
